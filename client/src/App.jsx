@@ -1,13 +1,14 @@
-import { useState } from 'react'
-import './index.css'
+import Navbar from "./components/layout/Navbar";
+import Footer from "./components/layout/Footer";
+import Home from "./pages/Home/Home";
 
 function App() {
   return (
-    <div className="min-h-screen bg-green-100 flex items-center justify-center">
-      <h1 className="text-5xl font-bold text-green-700">
-        Welcome to Earthmool 🌿
-      </h1>
-    </div>
+    <>
+      <Navbar />
+      <Home />
+      <Footer />
+    </>
   );
 }
 
