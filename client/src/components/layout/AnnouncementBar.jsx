@@ -1,25 +1,26 @@
-import Container from "../common/Container";
+import React from "react";
 
-function AnnouncementBar() {
+const announcements = [
+  "🚚 Free Shipping on Orders Above ₹499",
+  "🌿 100% Natural Ingredients",
+  "🔬 Lab Tested for Purity",
+  "⭐ Trusted by Thousands",
+];
+
+export default function AnnouncementBar() {
   return (
-    <div className="bg-green-900 text-white text-sm">
-      <Container>
-        <div className="flex items-center justify-between py-2">
-
-          <p>
-            🚚 Free Shipping on Orders Above ₹499
-          </p>
-
-          <div className="hidden md:flex gap-6">
-            <span>100% Natural</span>
-            <span>No Preservatives</span>
-            <span>Premium Quality</span>
-          </div>
-
-        </div>
-      </Container>
+    <div className="bg-[#1d3a22] text-white overflow-hidden">
+      <div className="flex w-max animate-marquee whitespace-nowrap">
+        {[...announcements, ...announcements].map((item, index) => (
+          <span
+            key={index}
+            className="px-10 py-2 text-sm font-medium"
+          >
+            {item}
+          </span>
+        ))}
+      </div>
     </div>
   );
 }
 
-export default AnnouncementBar;

@@ -1,8 +1,10 @@
+import Hero from "../../components/home/Hero";
+
 function Home() {
   return (
-    <div>
-      <h1>Welcome to Earthmool</h1>
-    </div>
+    <>
+      <Hero />
+    </>
   );
 }
 

@@ -6,7 +6,7 @@ function Button({
   className = "",
 }) {
   const baseClasses =
-    "px-6 py-3 rounded-lg font-medium transition-all duration-300";
+    "px-6 py-3 rounded-lg font-medium transition-all duration-300 cursor-pointer ";
 
   const variants = {
     primary: "bg-green-800 text-white hover:bg-green-900",
