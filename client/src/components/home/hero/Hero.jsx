@@ -1,6 +1,7 @@
 import HeroContent from "./HeroContent";
-import desktopHero from "../../assets/images/hero/banner-image.png";
-import mobileHero from "../../assets/images/hero/mobile-image.png";
+import desktopHero from "../../../assets/images/hero/banner-image.png";
+import mobileHero from "../../../assets/images/hero/mobile-image.png";
+import HeroScroll from "./HeroScroll";
 
 function Hero() {
   return (
@@ -25,6 +26,7 @@ function Hero() {
       {/* Content */}
       <div className="absolute inset-0 flex items-center">
         <HeroContent />
+        <HeroScroll />
       </div>
     </section>
   );
