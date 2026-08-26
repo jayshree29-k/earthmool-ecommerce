@@ -13,7 +13,7 @@ function ProductCard({ product }) {
         <img
             src={product.image}
             alt={product.name}
-            className="h-80 w-full object-cover transition duration-500"
+            className="h-64 w-full object-cover transition duration-500 sm:h-72 lg:h-80"
         />
    
       <div className="absolute left-4 top-4 flex flex-col gap-2">

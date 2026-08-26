@@ -5,26 +5,22 @@ import HeroScroll from "./HeroScroll";
 
 function Hero() {
   return (
-    <section className="relative overflow-hidden">
-      {/* Desktop Background */}
+    <section className="relative overflow-hidden bg-[#1d2d1d]">
       <img
         src={desktopHero}
         alt="Earthmool Hero"
-        className="hidden lg:block w-full h-auto object-cover"
+        className="hidden h-[80vh] w-full object-cover lg:block"
       />
 
-      {/* Mobile Background */}
       <img
         src={mobileHero}
         alt="Earthmool Hero Mobile"
-        className="block lg:hidden w-full h-auto object-cover"
+        className="block h-[80vh] w-full object-cover lg:hidden"
       />
 
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black/40"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/45 to-black/20" />
 
-      {/* Content */}
-      <div className="absolute inset-0 flex items-center">
+      <div className="absolute inset-0 flex flex-col justify-center">
         <HeroContent />
         <HeroScroll />
       </div>

@@ -10,12 +10,12 @@ function CategoryCard({ category }) {
         <img
           src={category.image}
           alt={category.name}
-          className="h-72 w-full object-cover transition duration-500 group-hover:scale-110"
+          className="h-60 w-full object-cover transition duration-500 group-hover:scale-110 sm:h-72"
         />
       </div>
 
       <div className="p-5 text-center">
-        <h3 className="text-xl font-semibold">
+        <h3 className="text-md font-semibold">
           {category.name}
         </h3>
       </div>
