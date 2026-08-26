@@ -1,8 +1,8 @@
-import garamMasala from "../../../assets/images/products/garam-masala.png";
-import turmeric from "../../../assets/images/products/turmeric.png";
-import chilli from "../../../assets/images/products/red-chilli.png";
-import coriander from "../../../assets/images/products/coriander.png";
-import khadagram from "../../../assets/images/products/khada-garam-masala.png";
+import garamMasala from "../assets/images/products/garam-masala.png";
+import turmeric from "../assets/images/products/turmeric.png";
+import chilli from "../assets/images/products/red-chilli.png";
+import coriander from "../assets/images/products/coriander.png";
+import khadagram from "../assets/images/products/khada-garam-masala.png";
 
 const productData = [
   {

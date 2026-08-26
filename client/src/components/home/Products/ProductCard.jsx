@@ -1,4 +1,4 @@
-import { Heart, ShoppingBag } from "lucide-react";
+import { ShoppingBag } from "lucide-react";
 import ProductRating from "./ProductRating";
 
 function ProductCard({ product }) {

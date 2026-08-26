@@ -1,5 +1,3 @@
-import React from "react";
-
 const announcements = [
   "🚚 Free Shipping on Orders Above ₹499",
   "🌿 100% Natural Ingredients",

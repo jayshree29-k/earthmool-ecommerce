@@ -1,4 +1,3 @@
-import Container from "../../common/Container";
 import HeroButtons from "../../common/HeroButtons";
 import HeroStats from "./HeroStats";
 import HeroBadge from "./HeroBadge";

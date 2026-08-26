@@ -10,12 +10,12 @@ import {
 import logo from "../../assets/images/logo/logo.png";
 
 const navLinks = [
-  "Home",
-  "Shop",
-  "Our Masalas",
-  "About Us",
-  "Blog",
-  "Recipes",
+  { name: "Home", url: "/" },
+  { name: "Shop", url: "/shop" },
+  { name: "Our Masalas", url: "/our-masalas" },
+  { name: "About Us", url: "/about-us" },
+  { name: "Blog", url: "/blog" },
+  { name: "Recipes", url: "/recipes" },
 ];
 
 export default function Header() {
@@ -40,11 +40,11 @@ export default function Header() {
           <nav className="hidden lg:flex items-center gap-10">
             {navLinks.map((item) => (
               <a
-                key={item}
-                href="#"
+                key={item.name}
+                href={item.url}
                 className="cursor-pointer relative text-[15px] text-gray-800 font-medium hover:text-[#264B2A] transition"
               >
-                {item}
+                {item.name}
 
                 <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-[#264B2A] transition-all duration-300 hover:w-full"></span>
               </a>
@@ -118,12 +118,12 @@ export default function Header() {
 
           {navLinks.map((item) => (
             <a
-              key={item}
-              href="#"
+              key={item.name}
+              href={item.url}
               className="px-6 py-4 border-b hover:bg-[#F5F3EC] transition"
               onClick={() => setOpen(false)}
             >
-              {item}
+              {item.name}
             </a>
           ))}
 

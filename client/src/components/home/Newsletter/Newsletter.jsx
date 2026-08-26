@@ -23,7 +23,7 @@ function Newsletter() {
 
       setMessage("Thank you for subscribing!");
       setEmail("");
-    } catch (error) {
+    } catch {
       setMessage("Something went wrong. Please try again.");
     } finally {
       setIsSubmitting(false);
