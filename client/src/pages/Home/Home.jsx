@@ -8,6 +8,7 @@ import RecipeSection from "../../components/home/RecipeSection/RecipeSection";
 import testimonialData from "../../components/home/Testimonials/testimonialData";
 import Testimonials from "../../components/home/Testimonials/Testimonials";
 import InstagramGallery from "../../components/home/InstagramGallery/InstagramGallery";
+import Newsletter from "../components/home/Newsletter/Newsletter";
 
 function Home() {
   return (
@@ -21,6 +22,7 @@ function Home() {
       <RecipeSection />
       <Testimonials testimonials={testimonialData} />
       <InstagramGallery />
+      <Newsletter />
     </>
   );
 }
