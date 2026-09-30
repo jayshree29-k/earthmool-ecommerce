@@ -7,6 +7,8 @@ import {
   User,
 } from "lucide-react";
 
+import { useCart } from "../../context/CartContext";
+import CartDrawer from "../cart/CartDrawer";
 import logo from "../../assets/images/logo/logo.png";
 
 const navLinks = [
@@ -20,124 +22,241 @@ const navLinks = [
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const { cartCount, isCartOpen, openCart, closeCart } = useCart();
+
+  /* =========================
+     OPEN CART
+  ========================= */
+  const handleOpenCart = () => {
+    setOpen(false);
+    openCart();
+  };
+
+  /* =========================
+     CLOSE CART
+  ========================= */
+  /* =========================
+     CLOSE MOBILE MENU
+  ========================= */
+  const handleCloseMenu = () => {
+    setOpen(false);
+  };
 
   return (
     <>
-      {/* Header */}
+      {/* =====================================================
+          HEADER
+      ===================================================== */}
       <header className="sticky top-0 z-50 bg-white shadow-sm">
-        <div className="max-w-8xl mx-auto h-20 px-6 flex items-center justify-between">
+        <div className="mx-auto flex h-20 max-w-8xl items-center justify-between px-6">
 
-          {/* Logo */}
-          <div className="flex items-center h-25">
-          <img
-            src={logo}
-            alt="Earthmool"
-            className="cursor-pointer h-20 w-auto object-contain"
-          />
-        </div>
+          {/* =================================================
+              LOGO
+          ================================================= */}
+          <div className="flex h-20 items-center">
+            <a
+              href="/"
+              aria-label="Earthmool Home"
+            >
+              <img
+                src={logo}
+                alt="Earthmool"
+                className="h-20 w-auto cursor-pointer object-contain"
+              />
+            </a>
+          </div>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-10">
+          {/* =================================================
+              DESKTOP NAVIGATION
+          ================================================= */}
+          <nav className="hidden items-center gap-10 lg:flex">
             {navLinks.map((item) => (
               <a
                 key={item.name}
                 href={item.url}
-                className="cursor-pointer relative text-[15px] text-gray-800 font-medium hover:text-[#264B2A] transition"
+                className="group relative cursor-pointer text-[15px] font-medium text-gray-800 transition hover:text-[#264B2A]"
               >
                 {item.name}
 
-                <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-[#264B2A] transition-all duration-300 hover:w-full"></span>
+                {/* Hover Underline */}
+                <span className="absolute -bottom-1 left-0 h-[2px] w-0 bg-[#264B2A] transition-all duration-300 group-hover:w-full" />
               </a>
             ))}
           </nav>
 
-          {/* Desktop Icons */}
-          <div className="hidden lg:flex items-center gap-5">
+          {/* =================================================
+              DESKTOP ICONS
+          ================================================= */}
+          <div className="hidden items-center gap-5 lg:flex">
 
-            <button className="cursor-pointer hover:text-[#264B2A] transition">
+            {/* Search */}
+            <button
+              type="button"
+              className="cursor-pointer text-gray-800 transition hover:text-[#264B2A]"
+              aria-label="Search"
+            >
               <Search size={22} />
             </button>
 
-            <button className="cursor-pointer hover:text-[#264B2A] transition">
+            {/* User */}
+            <button
+              type="button"
+              className="cursor-pointer text-gray-800 transition hover:text-[#264B2A]"
+              aria-label="Account"
+            >
               <User size={22} />
             </button>
 
-            <button className="cursor-pointer relative hover:text-[#264B2A] transition">
+            {/* Cart */}
+            <button
+              type="button"
+              onClick={handleOpenCart}
+              className="relative flex cursor-pointer items-center justify-center text-[#163824] transition hover:text-[#274E13]"
+              aria-label={`Open cart, ${cartCount} items`}
+            >
               <ShoppingCart size={22} />
 
-              <span className="absolute -top-2 -right-2 bg-[#264B2A] text-white text-[10px] rounded-full h-5 w-5 flex items-center justify-center">
-                0
-              </span>
+              {/* Cart Count */}
+              {cartCount > 0 && (
+                <span className="absolute -right-2 -top-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#C28A32] px-1 text-[10px] font-bold text-white">
+                  {cartCount > 99 ? "99+" : cartCount}
+                </span>
+              )}
             </button>
-
           </div>
 
-          {/* Mobile */}
+          {/* =================================================
+              MOBILE MENU BUTTON
+          ================================================= */}
           <button
+            type="button"
             onClick={() => setOpen(true)}
-            className="lg:hidden"
+            className="flex cursor-pointer items-center justify-center text-[#163824] lg:hidden"
+            aria-label="Open menu"
           >
             <Menu size={28} />
           </button>
         </div>
       </header>
 
-      {/* Overlay */}
+      {/* =====================================================
+          CART DRAWER
+      ===================================================== */}
+      <CartDrawer
+        isOpen={isCartOpen}
+        onClose={closeCart}
+      />
+
+      {/* =====================================================
+          MOBILE MENU OVERLAY
+      ===================================================== */}
       <div
-        onClick={() => setOpen(false)}
-        className={`fixed inset-0 bg-black/50 z-40 transition-opacity duration-300 ${
+        onClick={handleCloseMenu}
+        className={`fixed inset-0 z-40 bg-black/50 transition-opacity duration-300 ${
           open
-            ? "opacity-100 visible"
-            : "opacity-0 invisible"
+            ? "visible opacity-100"
+            : "invisible opacity-0"
         }`}
       />
 
-      {/* Drawer */}
+      {/* =====================================================
+          MOBILE MENU DRAWER
+      ===================================================== */}
       <aside
-        className={`fixed top-0 left-0 h-full w-72 bg-white z-50 shadow-xl transition-transform duration-300 ${
-          open ? "translate-x-0" : "-translate-x-full"
+        className={`fixed left-0 top-0 z-50 h-full w-72 bg-white shadow-xl transition-transform duration-300 ${
+          open
+            ? "translate-x-0"
+            : "-translate-x-full"
         }`}
       >
-        {/* Drawer Header */}
-        <div className="flex items-center justify-between p-5 border-b">
 
-          <img
-            src={logo}
-            alt=""
-            className="h-9"
-          />
+        {/* =================================================
+            MOBILE DRAWER HEADER
+        ================================================= */}
+        <div className="flex items-center justify-between border-b p-5">
 
-          <button onClick={() => setOpen(false)}>
-            <X />
+          {/* Logo */}
+          <a
+            href="/"
+            onClick={handleCloseMenu}
+            aria-label="Earthmool Home"
+          >
+            <img
+              src={logo}
+              alt="Earthmool"
+              className="h-9 w-auto object-contain"
+            />
+          </a>
+
+          {/* Close Button */}
+          <button
+            type="button"
+            onClick={handleCloseMenu}
+            className="cursor-pointer text-gray-700 transition hover:text-[#264B2A]"
+            aria-label="Close menu"
+          >
+            <X size={24} />
           </button>
 
         </div>
 
-        {/* Links */}
-        <div className="flex flex-col">
+        {/* =================================================
+            MOBILE NAVIGATION LINKS
+        ================================================= */}
+        <nav className="flex flex-col">
 
           {navLinks.map((item) => (
             <a
               key={item.name}
               href={item.url}
-              className="px-6 py-4 border-b hover:bg-[#F5F3EC] transition"
-              onClick={() => setOpen(false)}
+              className="border-b px-6 py-4 text-gray-800 transition hover:bg-[#F5F3EC] hover:text-[#264B2A]"
+              onClick={handleCloseMenu}
             >
               {item.name}
             </a>
           ))}
 
-        </div>
+        </nav>
 
-        {/* Bottom Icons */}
+        {/* =================================================
+            MOBILE BOTTOM ICONS
+        ================================================= */}
+        <div className="absolute bottom-8 left-6 flex items-center gap-6">
 
-        <div className="absolute bottom-8 left-6 flex gap-6">
+          {/* Search */}
+          <button
+            type="button"
+            className="cursor-pointer text-gray-700 transition hover:text-[#264B2A]"
+            aria-label="Search"
+          >
+            <Search size={22} />
+          </button>
 
-          <Search />
+          {/* User */}
+          <button
+            type="button"
+            className="cursor-pointer text-gray-700 transition hover:text-[#264B2A]"
+            aria-label="Account"
+          >
+            <User size={22} />
+          </button>
 
-          <User />
+          {/* Cart */}
+          <button
+            type="button"
+            onClick={handleOpenCart}
+            className="relative cursor-pointer text-gray-700 transition hover:text-[#264B2A]"
+            aria-label={`Open cart, ${cartCount} items`}
+          >
+            <ShoppingCart size={22} />
 
-          <ShoppingCart />
+            {/* Mobile Cart Count */}
+            {cartCount > 0 && (
+              <span className="absolute -right-2 -top-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#C28A32] px-1 text-[10px] font-bold text-white">
+                {cartCount > 99 ? "99+" : cartCount}
+              </span>
+            )}
+          </button>
 
         </div>
 

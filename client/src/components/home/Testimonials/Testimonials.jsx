@@ -1,7 +1,7 @@
 import testimonialData from "./testimonialData";
 import TestimonialSlider from "./TestimonialSlider";
 
-function Testimonials() {
+function Testimonials({ testimonials = testimonialData }) {
   return (
     <section className="bg-white py-24">
       <div className="mx-auto max-w-7xl px-4">
@@ -24,7 +24,7 @@ function Testimonials() {
         </div>
 
         <div className="mt-16">
-          <TestimonialSlider testimonials={testimonialData} />
+          <TestimonialSlider testimonials={testimonials} />
         </div>
 
       </div>

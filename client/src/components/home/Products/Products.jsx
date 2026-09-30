@@ -1,6 +1,9 @@
+import { useEffect, useState } from "react";
 import Container from "../../common/Container";
 import ProductCard from "./ProductCard";
 import productData from "./productData";
+import productImages from "./productImages";
+import { getProducts } from "../../../services/productService";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 
@@ -9,6 +12,50 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 function Products() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    let isActive = true;
+
+    getProducts()
+      .then((apiProducts) => {
+        const productsBySlug = new Map(
+          apiProducts.map((product) => [product.slug, product])
+        );
+
+        const featuredProducts = productData.flatMap((featuredProduct) => {
+          const product = productsBySlug.get(featuredProduct.slug);
+
+          if (!product) {
+            return [];
+          }
+
+          const imageName = product.image?.split("/").pop();
+
+          return [{
+            ...featuredProduct,
+            ...product,
+            badge: product.badge || featuredProduct.badge,
+            image:
+              productImages[imageName] ||
+              product.image ||
+              featuredProduct.image,
+          }];
+        });
+
+        if (isActive) {
+          setProducts(featuredProducts);
+        }
+      })
+      .catch((error) => {
+        console.error("Unable to load featured products:", error);
+      });
+
+    return () => {
+      isActive = false;
+    };
+  }, []);
+
   return (
     <section className="bg-[#faf8f3] px-4 py-16 sm:px-6 lg:px-8 lg:py-12">
       <Container>
@@ -33,7 +80,7 @@ function Products() {
           pagination={{ clickable: true }}
           spaceBetween={24}
           slidesPerView={1}
-          className="!pb-12"
+          className="pb-12!"
           breakpoints={{
             640: {
               slidesPerView: 2,
@@ -46,8 +93,8 @@ function Products() {
             },
           }}
         >
-          {productData.map((product) => (
-            <SwiperSlide key={product.id}>
+          {products.map((product) => (
+            <SwiperSlide key={product._id || product.id}>
               <ProductCard product={product} />
             </SwiperSlide>
           ))}

@@ -1,5 +1,6 @@
 import recipeData from "./recipeData";
 import RecipeCard from "./RecipeCard";
+import { Link } from "react-router-dom";
 
 function RecipeSection() {
   return (
@@ -37,9 +38,9 @@ function RecipeSection() {
 
         <div className="mt-16 text-center">
 
-          <button className="rounded-full bg-green-700 px-8 py-4 font-semibold text-white transition hover:bg-green-800">
+          <Link to="/recipes" className="inline-block rounded-full bg-green-700 px-8 py-4 font-semibold text-white transition hover:bg-green-800">
             View All Recipes
-          </button>
+          </Link>
 
         </div>
 

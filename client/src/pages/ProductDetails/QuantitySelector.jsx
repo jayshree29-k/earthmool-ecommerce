@@ -1,17 +1,19 @@
-import { useState } from "react";
 import { Minus, Plus } from "lucide-react";
+import { clampQuantity } from "../../utils/productStock";
 
-function QuantitySelector() {
-  const [quantity, setQuantity] = useState(1);
+function QuantitySelector({
+  quantity,
+  setQuantity,
+  stock,
+}) {
+  const disabled = stock === 0;
 
   const decreaseQuantity = () => {
-    setQuantity((previous) =>
-      Math.max(1, previous - 1)
-    );
+    setQuantity((previous) => clampQuantity(previous - 1, stock));
   };
 
   const increaseQuantity = () => {
-    setQuantity((previous) => previous + 1);
+    setQuantity((previous) => clampQuantity(previous + 1, stock));
   };
 
   return (
@@ -25,20 +27,32 @@ function QuantitySelector() {
         <button
           type="button"
           onClick={decreaseQuantity}
-          className="flex h-11 w-11 items-center justify-center rounded-full transition hover:bg-gray-100"
+          disabled={disabled || quantity <= 1}
+          className="flex h-11 w-11 items-center justify-center rounded-full transition hover:bg-gray-100 disabled:cursor-not-allowed disabled:text-gray-300 disabled:hover:bg-transparent"
           aria-label="Decrease quantity"
         >
           <Minus size={16} />
         </button>
 
-        <span className="w-10 text-center font-semibold">
-          {quantity}
-        </span>
+        <input
+          type="number"
+          min={stock === 0 ? 0 : 1}
+          max={stock}
+          step="1"
+          value={disabled ? 0 : clampQuantity(quantity, stock)}
+          onChange={(event) =>
+            setQuantity(clampQuantity(event.target.value, stock))
+          }
+          disabled={disabled}
+          className="w-12 appearance-none bg-transparent text-center font-semibold outline-none disabled:text-gray-400"
+          aria-label="Quantity"
+        />
 
         <button
           type="button"
           onClick={increaseQuantity}
-          className="flex h-11 w-11 items-center justify-center rounded-full transition hover:bg-gray-100"
+          disabled={disabled || quantity >= stock}
+          className="flex h-11 w-11 items-center justify-center rounded-full transition hover:bg-gray-100 disabled:cursor-not-allowed disabled:text-gray-300 disabled:hover:bg-transparent"
           aria-label="Increase quantity"
         >
           <Plus size={16} />

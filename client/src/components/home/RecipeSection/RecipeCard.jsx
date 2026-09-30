@@ -1,4 +1,5 @@
 import { Clock, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 function RecipeCard({ recipe }) {
   return (
@@ -29,10 +30,10 @@ function RecipeCard({ recipe }) {
             <span>{recipe.duration}</span>
           </div>
 
-          <button className="flex items-center gap-2 font-semibold text-green-700 transition hover:text-green-900">
+          <Link to={`/recipes/${recipe.id}`} className="flex items-center gap-2 font-semibold text-green-700 transition hover:text-green-900">
             Read Recipe
             <ArrowRight size={18} />
-          </button>
+          </Link>
 
         </div>
 

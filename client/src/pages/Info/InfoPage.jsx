@@ -1,0 +1,23 @@
+import { Link } from "react-router-dom";
+
+const pages = {
+  "our-story": { eyebrow: "Our story", title: "Good food begins with honest ingredients.", intro: "Earthmool started with a simple belief: everyday cooking deserves spices that are fresh, traceable, and full of character.", sections: [["Rooted in real kitchens", "We work with the flavours that make Indian food feel like home, while keeping every blend practical for the way people cook today."], ["Made with intention", "From selecting ingredients to sealing each pack, we favour small thoughtful steps over shortcuts. The result is a pantry you can trust and enjoy."], ["A little more warmth", "Every Earthmool blend is made to bring people around the table. That is the measure we come back to with every recipe and every batch."]] },
+  faqs: { eyebrow: "Support", title: "Frequently asked questions", intro: "A few helpful answers about Earthmool spices, orders, and delivery.", sections: [["How should I store my spices?", "Keep packs sealed in a cool, dry cupboard away from direct sunlight and steam."], ["How long does delivery take?", "Orders are generally delivered within 3 to 7 business days, depending on your location."], ["Can I change my order?", "Contact us as soon as possible at hello@earthmool.com and we will do our best to help before dispatch."]] },
+  shipping: { eyebrow: "Support", title: "Shipping information", intro: "We pack every order carefully so it reaches your kitchen fresh and ready to use.", sections: [["Dispatch", "Orders are packed within 1 to 2 business days. You will receive an update when your parcel leaves us."], ["Delivery", "Standard delivery usually takes 3 to 7 business days across India. Remote locations may take a little longer."], ["Need help?", "For an order update, email hello@earthmool.com with your order number."]] },
+  returns: { eyebrow: "Support", title: "Returns & refunds", intro: "We want you to feel confident ordering from Earthmool.", sections: [["Damaged or incorrect orders", "Please email hello@earthmool.com within 48 hours with your order number and photographs. We will arrange a replacement or refund."], ["Returns", "For food safety reasons, opened spice products cannot be returned. Unopened items may be reviewed case by case."], ["Refund timing", "Approved refunds are returned to the original payment method within 5 to 7 business days."]] },
+  "privacy-policy": { eyebrow: "Legal", title: "Privacy policy", intro: "Your privacy matters to us. This page explains the information we collect and how we use it.", sections: [["Information we collect", "We collect details you provide when placing an order or contacting us, such as your name, delivery address, email, and phone number."], ["How we use it", "We use this information to process orders, provide support, and share service updates. We do not sell your personal information."], ["Your choices", "You can contact us at hello@earthmool.com to ask about the personal information we hold or to request an update."]] },
+  terms: { eyebrow: "Legal", title: "Terms & conditions", intro: "These terms keep shopping with Earthmool clear and straightforward.", sections: [["Using this website", "Please use the website lawfully and provide accurate information when placing an order."], ["Products and pricing", "We work to keep product descriptions, availability, and prices accurate. Details may change as products and stock change."], ["Orders", "An order is accepted once payment is confirmed. We may contact you if an item is unavailable or if an order needs clarification."]] },
+};
+
+function InfoPage({ page }) {
+  const content = pages[page] || pages.faqs;
+
+  return (
+    <main className="bg-[#FCFAF6]">
+      <section className="bg-[#FFF2DE] px-6 py-20 sm:py-28"><div className="mx-auto max-w-4xl text-center"><p className="text-sm font-semibold uppercase tracking-[3px] text-green-700">{content.eyebrow}</p><h1 className="mt-5 text-4xl font-bold text-[#163824] sm:text-6xl">{content.title}</h1><p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-600">{content.intro}</p></div></section>
+      <section className="mx-auto max-w-4xl px-6 py-14 sm:py-20"><div className="divide-y divide-[#eadfce]">{content.sections.map(([heading, text]) => <section key={heading} className="py-8 first:pt-0"><h2 className="text-2xl font-bold text-[#163824]">{heading}</h2><p className="mt-3 max-w-3xl text-lg leading-8 text-gray-600">{text}</p></section>)}</div><Link to="/contact" className="mt-8 inline-block rounded-full bg-green-700 px-6 py-3 font-semibold text-white transition hover:bg-green-800">Contact us</Link></section>
+    </main>
+  );
+}
+
+export default InfoPage;

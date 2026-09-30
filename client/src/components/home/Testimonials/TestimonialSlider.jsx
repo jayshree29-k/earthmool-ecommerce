@@ -29,7 +29,7 @@ function TestimonialSlider({ testimonials }) {
     <div className="relative">
 
       {/* Desktop / Tablet Cards */}
-      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 hidden">
+      <div className="hidden gap-8 md:grid md:grid-cols-2 lg:grid-cols-3">
         {testimonials.map((testimonial) => (
           <TestimonialCard
             key={testimonial.id}

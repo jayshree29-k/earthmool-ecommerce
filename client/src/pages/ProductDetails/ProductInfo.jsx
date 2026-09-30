@@ -1,18 +1,34 @@
+import { useState } from "react";
 import { Star, Heart, ShieldCheck } from "lucide-react";
+
 import QuantitySelector from "./QuantitySelector";
+import { useCart } from "../../context/CartContext";
+import { getProductStock, getStockLabel } from "../../utils/productStock";
 
 function ProductInfo({ product }) {
+  const [quantity, setQuantity] = useState(1);
+  const stock = getProductStock(product);
+
+  const { addToCart, openCart } = useCart();
+
+  const handleAddToCart = () => {
+    if (stock === 0) {
+      return;
+    }
+
+    addToCart(product, quantity);
+    openCart();
+  };
+
   return (
     <div className="flex flex-col">
 
-      {/* Badge */}
       {product.badge && (
         <span className="w-fit rounded-full bg-green-100 px-4 py-2 text-sm font-semibold text-green-700">
           {product.badge}
         </span>
       )}
 
-      {/* Name */}
       <h1 className="mt-5 text-4xl font-bold text-gray-900 sm:text-5xl">
         {product.name}
       </h1>
@@ -21,7 +37,6 @@ function ProductInfo({ product }) {
       <div className="mt-5 flex items-center gap-3">
 
         <div className="flex items-center gap-1">
-
           {[...Array(5)].map((_, index) => (
             <Star
               key={index}
@@ -30,10 +45,9 @@ function ProductInfo({ product }) {
               color="#C28A32"
             />
           ))}
-
         </div>
 
-        <span className="font-medium text-gray-900">
+        <span className="font-medium">
           {product.rating}
         </span>
 
@@ -50,45 +64,48 @@ function ProductInfo({ product }) {
           ₹{product.price}
         </span>
 
-        {product.comparePrice && (
-          <span className="text-lg text-gray-400 line-through">
-            ₹{product.comparePrice}
-          </span>
-        )}
-
-        {product.comparePrice && (
-          <span className="rounded-md bg-red-100 px-2 py-1 text-sm font-semibold text-red-600">
-            {Math.round(
-              ((product.comparePrice - product.price) /
-                product.comparePrice) *
-                100
-            )}
-            % OFF
-          </span>
-        )}
+        <span className="text-lg text-gray-400 line-through">
+          ₹{product.comparePrice}
+        </span>
 
       </div>
 
-      {/* Description */}
-      <p className="mt-6 leading-8 text-gray-600">
-        Carefully selected premium spices packed to preserve
-        their natural aroma, flavour, and freshness.
+      <p
+        className={`mt-4 text-sm font-semibold ${
+          stock === 0
+            ? "text-red-600"
+            : stock <= 5
+              ? "text-amber-700"
+              : "text-green-700"
+        }`}
+      >
+        {getStockLabel(product)}
       </p>
 
-      {/* Divider */}
+      {/* Description */}
+      <p className="mt-6 leading-8 text-gray-600">
+        {product.description}
+      </p>
+
       <div className="my-7 h-px bg-gray-200" />
 
       {/* Quantity */}
-      <QuantitySelector />
+      <QuantitySelector
+        quantity={quantity}
+        setQuantity={setQuantity}
+        stock={stock}
+      />
 
       {/* Buttons */}
-      <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+      <div className="mt-6 flex gap-3">
 
         <button
           type="button"
-          className="flex-1 rounded-full bg-green-800 px-7 py-4 font-semibold text-white transition hover:bg-green-900"
+          onClick={handleAddToCart}
+          disabled={stock === 0}
+          className="flex-1 rounded-full bg-green-800 px-7 py-4 font-semibold text-white transition hover:bg-green-900 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-600 disabled:hover:bg-gray-300"
         >
-          Add to Cart
+          {stock === 0 ? "Out of Stock" : "Add to Cart"}
         </button>
 
         <button
@@ -100,8 +117,8 @@ function ProductInfo({ product }) {
 
         <button
           type="button"
+          className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-gray-200 bg-white transition hover:text-red-500"
           aria-label="Add to wishlist"
-          className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-gray-200 bg-white transition hover:border-red-300 hover:text-red-500"
         >
           <Heart size={21} />
         </button>
@@ -127,7 +144,6 @@ function ProductInfo({ product }) {
               Carefully packed to preserve freshness.
             </p>
           </div>
-
         </div>
 
       </div>

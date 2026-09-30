@@ -17,3 +17,7 @@
 .animate-marquee {
   animation: var(--animate-marquee);
 }
+
+button {
+  cursor: pointer;
+}
